@@ -1,0 +1,9 @@
+# Installed by ml/setup_windows.ps1 AFTER torch/torchaudio (which need a special CUDA index, see that script)
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8
+soundfile>=0.12
+huggingface_hub>=0.23
+speechbrain>=1.0
+flask>=3.0
+waitress>=3.0

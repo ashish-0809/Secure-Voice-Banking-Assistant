@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure Voice Banking Assistant</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+<div class="brand">
+  <h1>Vaani Bank</h1>
+  <span>Smart Banking. Simple Voice.</span>
+  <p>Secure Voice Banking Assistant</p>
+</div>
+  <label class="lang">🌐Language
+    <select id="lang">
+      <option value="en">English</option><option value="hi">हिन्दी</option><option value="ta">தமிழ்</option>
+      <option value="te">తెలుగు</option><option value="bn">বাংলা</option>
+    </select>
+  </label>
+</header>
+
+<main>
+  <section id="loginView" class="card narrow">
+    <h3>Sign in</h3>
+    <p class="hint">Welcome back! Sign in to access your account.</p>
+    <input id="username" placeholder="Customer ID / Username" autocomplete="username">
+    <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+    <button class="btn" id="loginBtn">Login</button>
+    <p id="loginMsg" class="error" role="alert"></p>
+    
+  </section>
+
+  <div id="dash" hidden>
+    <div class="grid">
+      <section class="card">
+        <h2>Welcome, <span id="uName"></span></h2>
+        <dl class="kv">
+          <dt>Account</dt><dd id="uAcct"></dd><dt>Branch</dt><dd id="uBranch"></dd>
+          <dt>IFSC</dt><dd id="uIfsc"></dd><dt>Mobile</dt><dd id="uPhone"></dd>
+        </dl>
+        <div class="balance">Balance <b>₹<span id="uBal"></span></b></div>
+        <div class="row"><button class="btn secondary" id="payToggle">💳 Make a payment</button>
+        <button class="btn ghost" id="logoutBtn">Logout</button></div>
+      </section>
+
+      <section class="card" id="voiceCard">
+        <h2>🛡️ Voice security <span id="enrollBadge" class="badge"></span></h2>
+        <p class="small" id="backendNote"></p>
+        <div class="row">
+          <button class="btn" id="enrollBtn">🎙️ Enroll my voice</button>
+          <button class="btn ghost" id="removeVoiceBtn" hidden>Remove voice profile</button>
+          <a class="btn ghost" id="reportBtn" href="/report" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">📊 Security report (accuracy, FAR/FRR, replay)</a>
+          <a class="btn ghost" href="/report?set=public" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">📈 Public-dataset report (LibriSpeech)</a>
+        </div>
+        <table class="levels">
+          <tr><th>Banking Feature</th><th>Verification Required</th></tr>
+          <tr><td>General Assistance</td><td>None</td></tr>
+          <tr><td>Bank Information</td><td>Logged-in session</td></tr>
+          <tr><td>Balance, account, transactions, statement</td><td>Owner voice + random phrase</td></tr>
+          <tr><td>Money transfer</td><td>Owner voice + random phrase + OTP / PIN</td></tr>
+        </table>
+      </section>
+
+      <section class="card wide">
+        <h2>🎤 Voice assistant</h2>
+        <div class="row">
+          <button class="btn mic" id="micBtn">🎤 Ask by voice</button>
+          <input id="cmdText" placeholder="…or type a command, e.g. “what is my balance”" aria-label="Type a command">
+          <button class="btn secondary" id="sendBtn">Send</button>
+        </div>
+        <div id="chat" aria-live="polite"></div>
+      </section>
+
+      <section class="card wide" id="payCard" hidden>
+        <h2>Payment</h2>
+        <div class="modes" id="modes">
+          <button class="mode active" data-mode="upi">UPI</button><button class="mode" data-mode="neft">NEFT</button><button class="mode" data-mode="imps">IMPS</button>
+        </div>
+        <div class="form">
+          <input id="pAmount" type="number" min="1" step="0.01" placeholder="Amount (₹)">
+          <input id="pPayee" placeholder="Beneficiary name">
+          <input id="pUpi" placeholder="UPI ID (name@bank)">
+          <input id="pAcct" placeholder="Beneficiary account number" hidden inputmode="numeric">
+          <input id="pIfsc" placeholder="IFSC code" hidden>
+          <input id="pDesc" placeholder="Description (optional)">
+        </div>
+        <p class="small">Transfers always need a fresh voice check, then an OTP or your PIN.</p>
+        <button class="btn" id="payBtn">Continue</button>
+      </section>
+
+      <section class="card">
+        <h2>Recent transactions</h2>
+        <div id="txList"></div>
+      </section>
+
+      <section class="card">
+        <h2>Security activity</h2>
+        <ul id="logList" class="log"></ul>
+      </section>
+    </div>
+  </div>
+</main>
+
+<div id="modal" class="modal" hidden><div class="box" id="modalBox" role="dialog" aria-modal="true"></div></div>
+<div id="toast" class="toast" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>
