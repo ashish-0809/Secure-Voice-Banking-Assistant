@@ -64,7 +64,7 @@ test('replay: the same recording submitted again is blocked even with a new chal
 test('a voice check done for a command cannot be reused for a payment or for re-enrollment', async () => {
     const r = await ask('what is my balance');
     assert.equal((await say('owner', 205, r.challenge)).success, true);
-    const pay = { amount: 5, payee: 'Z', mode: 'upi', upiId: 'z@vaanibank' };
+    const pay = { amount: 5, payee: 'Z', mode: 'upi', upiId: 'zz@vaanibank' };
     assert.equal((await call('POST', '/payment/initiate', pay)).json.needsVerification, true);
     assert.equal((await call('POST', '/voice/enroll/start')).json.needsVerification, true);
 });
